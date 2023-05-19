@@ -1,0 +1,25 @@
+// Example of how to call your shared library after configuring it in Jenkins Global Settings
+//@Library('slack-shared-library') _
+
+pipeline {
+    agent any
+    
+    stages {
+        stage('Build') {
+            steps {
+                // Your build steps here...
+            }
+        }
+    }
+    
+    post {
+        always {
+            slackNotification(
+                message: 'Build completed!',
+		// Replace slackWebhookUrl by your own
+                slackWebhookUrl: 'https://your.slack.webhook.url'
+            )
+        }
+    }
+}
+
